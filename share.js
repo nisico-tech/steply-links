@@ -34,6 +34,8 @@ const COPY = {
   print: "Print these cards",
   six: "6 per page",
   two: "2 per page",
+  landingTitle: "Steply",
+  landingLine: "Visual routines for kids, with picture cards. Free.",
   privacy: "A link sends a locked copy through our server. We can't open it. It is deleted when the link ends or you stop it.",
 };
 const STORES = {
@@ -222,6 +224,25 @@ function privacyLine() {
   return el("p", "privacy", COPY.privacy);
 }
 
+function storeRow() {
+  const row = el("div", "stores");
+  for (const [label, href] of [["App Store", STORES.ios], ["Google Play", STORES.android]]) {
+    const a = el("a", "btn", label);
+    a.href = href;
+    a.rel = "noopener noreferrer";
+    row.appendChild(a);
+  }
+  return row;
+}
+
+// The bare site root (no link in it) is a plain "Get Steply" page, not an error.
+function landing(root) {
+  root.textContent = "";
+  root.appendChild(el("h1", "", COPY.landingTitle));
+  root.appendChild(el("p", "lead", COPY.landingLine));
+  root.appendChild(storeRow());
+}
+
 function routineBody(root, view) {
   const r = (view.routines || [])[0];
   if (!r) return message(root, COPY.incomplete);
@@ -238,14 +259,7 @@ function routineBody(root, view) {
   root.appendChild(cardList(r));
   const get = el("section", "get");
   get.appendChild(el("h2", "", COPY.getSteply));
-  const row = el("div", "stores");
-  for (const [label, href] of [["App Store", STORES.ios], ["Google Play", STORES.android]]) {
-    const a = el("a", "btn", label);
-    a.href = href;
-    a.rel = "noopener noreferrer";
-    row.appendChild(a);
-  }
-  get.appendChild(row);
+  get.appendChild(storeRow());
   get.appendChild(el("p", "", COPY.afterInstall));
   root.appendChild(get);
   root.appendChild(privacyLine());
@@ -343,6 +357,7 @@ async function run() {
   const root = document.getElementById("app");
   const m = /^\/([rs])\/([A-Za-z0-9_-]{22})\/?$/.exec(location.pathname);
   const key = location.hash.slice(1);
+  if (/^\/(index\.html)?$/.test(location.pathname) && !key) return landing(root);
   if (!m || key.length !== 43 || !B64URL.test(key)) return message(root, COPY.incomplete);
   let res;
   try {
