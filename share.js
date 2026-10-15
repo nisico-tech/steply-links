@@ -1,5 +1,5 @@
 /* Browser script of the share page (same origin, no inline script). The key never leaves memory. */
-/* global window, document, location, fetch, atob, crypto, TextDecoder, TextEncoder, DOMParser, module */
+/* global window, document, location, navigator, fetch, atob, crypto, TextDecoder, TextEncoder, DOMParser, module */
 "use strict";
 // Frame-buster: a static host (GitHub Pages) cannot send frame-ancestors, so a framed copy hides itself and stops.
 const FRAMED = typeof window !== "undefined" && window.top !== window.self;
@@ -34,6 +34,16 @@ const COPY = {
   print: "Print these cards",
   six: "6 per page",
   two: "2 per page",
+  playerOpen: "Do it here, no app needed",
+  stepOf: "Step {n} of {total}",
+  done: "Done",
+  back: "Back",
+  close: "Close",
+  readIt: "Read it",
+  allDone: "All done!",
+  again: "Do it again",
+  toCards: "Back to the cards",
+  withApp: "With the app: timers, sounds and stars.",
   landingTitle: "Steply",
   landingLine: "Visual routines for kids, with picture cards. Free.",
   privacy: "A link sends a locked copy through our server. We can't open it. It is deleted when the link ends or you stop it.",
@@ -161,16 +171,22 @@ function cleanSvg(markup) {
   }
 }
 
+/** The step's picture (a cleaned drawing or a checked photo), or null. */
+function pictureOf(step) {
+  const p = step.picture || {};
+  if (typeof p.svg === "string") return cleanSvg(p.svg);
+  if (typeof p.photo === "string" && /^data:image\/(jpeg|png);base64,/.test(p.photo) && /^[A-Za-z0-9+/=]*$/.test(p.photo.slice(p.photo.indexOf(",") + 1))) {
+    const img = el("img");
+    img.src = p.photo;
+    img.alt = "";
+    return img;
+  }
+  return null;
+}
+
 function stepCard(step) {
   const li = el("li", "card");
-  const p = step.picture || {};
-  let pic = null;
-  if (typeof p.svg === "string") pic = cleanSvg(p.svg);
-  else if (typeof p.photo === "string" && /^data:image\/(jpeg|png);base64,/.test(p.photo) && /^[A-Za-z0-9+/=]*$/.test(p.photo.slice(p.photo.indexOf(",") + 1))) {
-    pic = el("img");
-    pic.src = p.photo;
-    pic.alt = "";
-  }
+  const pic = pictureOf(step);
   if (pic) {
     const box = el("div", "pic");
     box.appendChild(pic);
@@ -256,6 +272,10 @@ function routineBody(root, view) {
   else title = fill(view.forName ? COPY.pageTitle : COPY.pageTitleNoName, { from, name: view.forName || "", routine: r.title });
   void who;
   root.appendChild(el("h1", "", title));
+  const go = el("button", "btn big", COPY.playerOpen);
+  go.type = "button";
+  go.addEventListener("click", () => player(root, r, () => routineBody(root, view)));
+  root.appendChild(go);
   root.appendChild(cardList(r));
   const get = el("section", "get");
   get.appendChild(el("h2", "", COPY.getSteply));
@@ -263,6 +283,101 @@ function routineBody(root, view) {
   get.appendChild(el("p", "", COPY.afterInstall));
   root.appendChild(get);
   root.appendChild(privacyLine());
+}
+
+// ---------- step by step in the browser (F-1719..F-1722) ----------
+/** Same rules as playerStateV63 (src/contracts/share-player-v63.ts). */
+function nextState(s, action) {
+  if (action === "again") return { at: 0, total: s.total };
+  if (action === "back") return { at: Math.max(0, Math.min(s.at, s.total) - 1), total: s.total };
+  return { at: Math.min(s.total, s.at + 1), total: s.total };
+}
+
+function canSpeak() {
+  return typeof window !== "undefined" && "speechSynthesis" in window && typeof window.SpeechSynthesisUtterance === "function";
+}
+
+function button(cls, text, onClick) {
+  const b = el("button", cls, text);
+  b.type = "button";
+  b.addEventListener("click", onClick);
+  return b;
+}
+
+function player(root, routine, leave) {
+  const steps = routine.steps || [];
+  let state = { at: 0, total: steps.length };
+  let lock = null;
+  const keepOn = () => {
+    try {
+      if (typeof navigator !== "undefined" && navigator.wakeLock && !lock) {
+        navigator.wakeLock.request("screen").then((l) => { lock = l; }, () => {});
+      }
+    } catch { /* not allowed here */ }
+  };
+  const letGo = () => {
+    if (lock) lock.release().catch(() => {});
+    lock = null;
+    if (canSpeak()) window.speechSynthesis.cancel();
+  };
+  const exit = () => {
+    letGo();
+    leave();
+  };
+  const act = (a) => {
+    state = nextState(state, a);
+    render();
+  };
+  function render() {
+    root.textContent = "";
+    const box = el("div", "player");
+    if (state.at >= state.total) {
+      letGo();
+      box.classList.add("end");
+      box.appendChild(el("div", "star", "\u2605"));
+      box.appendChild(el("h1", "", COPY.allDone));
+      box.appendChild(el("p", "lead", routine.title));
+      box.appendChild(button("btn big", COPY.again, () => { keepOn(); act("again"); }));
+      box.appendChild(button("btn alt", COPY.toCards, exit));
+      const get = el("section", "get");
+      get.appendChild(el("h2", "", COPY.getSteply));
+      get.appendChild(storeRow());
+      get.appendChild(el("p", "", COPY.withApp));
+      box.appendChild(get);
+      root.appendChild(box);
+      return;
+    }
+    const step = steps[state.at];
+    const top = el("div", "ptop");
+    top.appendChild(el("span", "pcount", fill(COPY.stepOf, { n: String(state.at + 1), total: String(state.total) })));
+    top.appendChild(button("link", COPY.close, exit));
+    box.appendChild(top);
+    const dots = el("div", "dots");
+    dots.setAttribute("aria-hidden", "true");
+    for (let i = 0; i < state.total; i++) dots.appendChild(el("span", i < state.at ? "dot on" : i === state.at ? "dot now" : "dot"));
+    box.appendChild(dots);
+    const pic = pictureOf(step);
+    if (pic) {
+      const p = el("div", "ppic");
+      p.appendChild(pic);
+      box.appendChild(p);
+    }
+    box.appendChild(el("div", pic ? "pname" : "pname plain", step.label));
+    if (canSpeak()) {
+      box.appendChild(button("btn alt", COPY.readIt, () => {
+        const u = new window.SpeechSynthesisUtterance(step.label);
+        u.lang = "en-US";
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(u);
+      }));
+    }
+    box.appendChild(button("btn done", COPY.done, () => act("done")));
+    if (state.at > 0) box.appendChild(button("link", COPY.back, () => act("back")));
+    root.appendChild(box);
+  }
+  keepOn();
+  render();
+  if (typeof window !== "undefined" && window.scrollTo) window.scrollTo(0, 0);
 }
 
 function schoolBody(root, view) {
