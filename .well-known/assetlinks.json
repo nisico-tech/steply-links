@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "eu.nisico.steply.review",
+      "sha256_cert_fingerprints": [
+        "FE:49:41:A1:92:45:39:28:00:D7:AB:AA:AC:A1:58:BE:28:2D:75:CC:92:33:8C:AA:60:3D:98:E2:9A:F9:81:90"
+      ]
+    }
+  }
+]

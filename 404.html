@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'self' https://gugomttjtdbmkthzgtfu.supabase.co; img-src data:; style-src 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="steply-api" content="https://gugomttjtdbmkthzgtfu.supabase.co/functions/v1">
+<title>Steply</title>
+<style>
+:root{--bg:#FBF7F0;--ink:#2B2A28;--soft:#5A5650;--card:#fff;--accent:#1F5F4A;--line:#D9D1C3}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+main{max-width:640px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:1.6rem;line-height:1.25;margin:0 0 8px}
+h2{font-size:1.25rem;margin:24px 0 4px}
+.lead{font-size:1rem;margin:0 0 8px;color:var(--soft)}
+.fresh{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:999px;background:var(--card);border:2px solid var(--line);font-size:1rem;font-weight:600}
+.fresh.stale{background:#FCE9D6;border-color:#E3B07D}
+.msg{background:var(--card);border-radius:20px;box-shadow:0 2px 12px rgba(43,42,40,.1);padding:24px;font-size:1.2rem}
+.cards{display:grid;gap:16px;margin:16px 0;padding:0;list-style:none}
+.card{background:var(--card);border-radius:20px;box-shadow:0 2px 12px rgba(43,42,40,.1);padding:16px;text-align:center;break-inside:avoid}
+.pic{display:flex;align-items:center;justify-content:center;min-height:160px}
+.pic svg{width:100%;max-width:240px;height:auto;max-height:240px}
+.pic img{width:100%;max-width:240px;max-height:240px;object-fit:contain;border-radius:12px}
+.name{font-size:1.3rem;font-weight:600;margin-top:8px;overflow-wrap:anywhere}
+.plain .name{margin:0;padding:32px 0}
+.tag{display:inline-block;margin:0 0 0 8px;padding:2px 12px;border:2px solid var(--ink);border-radius:999px;font-size:.9rem;font-weight:600;vertical-align:middle}
+.time{font-size:1rem;color:var(--soft);margin:0 0 4px}
+[role=tablist]{display:flex;gap:8px;margin:16px 0}
+[role=tab]{flex:1;min-height:48px;font:inherit;font-weight:600;color:var(--ink);background:var(--card);border:2px solid var(--ink);border-radius:999px;cursor:pointer}
+[role=tab][aria-selected=true]{background:var(--ink);color:#fff}
+.btn{display:block;min-height:52px;padding:12px 20px;margin:12px 0;font:inherit;font-weight:700;text-align:center;text-decoration:none;color:#fff;background:var(--accent);border:2px solid var(--accent);border-radius:999px;cursor:pointer}
+.btn.alt{color:var(--ink);background:var(--card);border-color:var(--ink)}
+.stores{display:flex;gap:12px;flex-wrap:wrap}.stores .btn{flex:1 1 140px;margin:0}
+.get{margin-top:32px}
+.print{margin-top:32px;padding-top:16px;border-top:1px solid var(--line)}
+.print label{display:block;margin:6px 0;min-height:44px}
+.print input{width:22px;height:22px;vertical-align:middle;margin-right:8px}
+.privacy{margin-top:32px;font-size:.9rem;color:var(--soft)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #0B57D0;outline-offset:2px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:no-preference){.card{transition:box-shadow .2s}}
+@media (prefers-contrast:more){:root{--soft:#2B2A28}.card,.msg{box-shadow:none;border:2px solid var(--ink)}}
+@page{margin:15mm}
+@media print{
+  body{background:#fff;font-size:12pt}
+  main{max-width:none;padding:0}
+  .noprint,[role=tablist],.get,.print,.privacy,.btn{display:none!important}
+  .panel[hidden]{display:none!important}
+  .cards{display:grid;gap:6mm;margin:0}
+  .card{box-shadow:none;border:1px solid #888;border-radius:8mm;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+  .pp6 .cards{grid-template-columns:1fr 1fr;grid-auto-rows:78mm}
+  .pp6 .pic{min-height:0;height:56mm}.pp6 .pic svg,.pp6 .pic img{max-height:54mm;max-width:100%}
+  .pp2 .cards{grid-template-columns:1fr;grid-auto-rows:114mm}
+  .pp2 .pic{min-height:0;height:84mm}.pp2 .pic svg,.pp2 .pic img{max-height:82mm;max-width:100%}
+  .pp2 .name{font-size:22pt}
+  .rtitle,.time{display:none}
+}
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+<!-- Behaviour lives in share.js (same origin; CSP script-src 'self', no inline script). It reads the key from location.hash, derives the
+     AES key with PBKDF2 and opens the view with AES-GCM; it never sends the key anywhere.
+     Words it shows live there too: Get Steply (free), Today and Tomorrow tabs; the print layout is the @media print block above. -->
+<script src="/share.js" defer></script>
+</body>
+</html>

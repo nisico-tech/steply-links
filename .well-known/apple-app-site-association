@@ -1,0 +1,19 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "K5QF7Z6883.eu.nisico.steply"
+        ],
+        "components": [
+          {
+            "/": "/r/*"
+          },
+          {
+            "/": "/join*"
+          }
+        ]
+      }
+    ]
+  }
+}
