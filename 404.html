@@ -9,70 +9,109 @@
 <meta name="steply-api" content="https://gugomttjtdbmkthzgtfu.supabase.co/functions/v1">
 <title>Steply</title>
 <style>
-:root{--bg:#FBF7F0;--ink:#2B2A28;--soft:#5A5650;--card:#fff;--accent:#1F5F4A;--line:#D9D1C3}
+:root{--bg:#F6F1E7;--card:#FFFCF7;--ink:#2A2622;--soft:#5E564C;--line:#E2D8C6;--tint:#F3E4D3;--accent:#B53E22;--edge:#8F2E17;--on:#FFFFFF;--done:#2F6B4F;--doneBg:#E4F1E8;--p0:#FFE6CC;--p1:#D8E9FB;--p2:#FBDDE2;--p3:#FFF1C7;--p4:#DFF2E1;--p5:#E7DEFB;--focus:#0B57D0;--star:#E2603F}
+@media (prefers-color-scheme:dark){:root{--bg:#16233A;--card:#1E2E4A;--ink:#F3F6FA;--soft:#C3CDDD;--line:#3A4F72;--tint:#2B3F66;--accent:#FF9A7E;--edge:#B8604A;--on:#16233A;--done:#8FD3B0;--doneBg:#1F3A44;--p0:#EBD8C5;--p1:#CDDAE7;--p2:#E7D1D5;--p3:#EBE0C1;--p4:#D1DFD2;--p5:#D8D2E7;--focus:#8AB4F8}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
 main{max-width:640px;margin:0 auto;padding:24px 16px 48px}
-h1{font-size:1.6rem;line-height:1.25;margin:0 0 8px}
-h2{font-size:1.25rem;margin:24px 0 4px}
+h1{font-size:1.75rem;font-weight:800;line-height:1.2;margin:0 0 8px}
+h2{font-size:1.2rem;margin:24px 0 4px}
 .lead{font-size:1rem;margin:0 0 8px;color:var(--soft)}
-.fresh{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:999px;background:var(--card);border:2px solid var(--line);font-size:1rem;font-weight:600}
-.fresh.stale{background:#FCE9D6;border-color:#E3B07D}
-.msg{background:var(--card);border-radius:20px;box-shadow:0 2px 12px rgba(43,42,40,.1);padding:24px;font-size:1.2rem}
-.cards{display:grid;gap:16px;margin:16px 0;padding:0;list-style:none}
-.card{background:var(--card);border-radius:20px;box-shadow:0 2px 12px rgba(43,42,40,.1);padding:16px;text-align:center;break-inside:avoid}
-.pic{display:flex;align-items:center;justify-content:center;min-height:160px}
-.pic svg{width:100%;max-width:240px;height:auto;max-height:240px}
-.pic img{width:100%;max-width:240px;max-height:240px;object-fit:contain;border-radius:12px}
-.name{font-size:1.3rem;font-weight:600;margin-top:8px;overflow-wrap:anywhere}
-.plain .name{margin:0;padding:32px 0}
-.tag{display:inline-block;margin:0 0 0 8px;padding:2px 12px;border:2px solid var(--ink);border-radius:999px;font-size:.9rem;font-weight:600;vertical-align:middle}
-.time{font-size:1rem;color:var(--soft);margin:0 0 4px}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:0 0 4px}
+.fresh{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:999px;background:var(--doneBg);color:var(--done);font-size:1rem;font-weight:600}
+.fresh.stale{background:#FCE9D6;color:#6B3A12}
+.msg,.card,.rcard{background:var(--card);border-radius:22px;box-shadow:inset 0 0 0 1.5px var(--line),0 3px 0 var(--line)}
+.msg{padding:24px;font-size:1.2rem}
+/* Every step of the routine, two columns (one under 340 px or at large text); the picture on its pastel ground, the name under it (DESIGN-63b). */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;padding:0;list-style:none}
+@media (max-width:340px){.cards{grid-template-columns:1fr}}
+.card{padding:12px;text-align:center;break-inside:avoid}
+.pic{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;border-radius:16px;box-shadow:inset 0 0 0 2px var(--ink);background:var(--p0);overflow:hidden;padding:8px}
+.p1 .pic,.p1.ppic{background:var(--p1)}.p2 .pic,.p2.ppic{background:var(--p2)}.p3 .pic,.p3.ppic{background:var(--p3)}.p4 .pic,.p4.ppic{background:var(--p4)}.p5 .pic,.p5.ppic{background:var(--p5)}
+.pic svg{width:100%;height:100%}
+.pic img{width:calc(100% + 16px);height:calc(100% + 16px);margin:-8px;object-fit:cover}
+.name{font-size:1.05rem;font-weight:600;margin-top:8px;overflow-wrap:anywhere}
+/* A step with no picture: its name on the pastel tile itself, never an empty card. */
+.plain .name{margin:0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;padding:8px;border-radius:16px;box-shadow:inset 0 0 0 2px var(--ink);background:var(--p0);color:#2A2622}
+.p1.plain .name{background:var(--p1)}.p2.plain .name{background:var(--p2)}.p3.plain .name{background:var(--p3)}.p4.plain .name{background:var(--p4)}.p5.plain .name{background:var(--p5)}
+.tag{display:inline-block;margin:0 0 0 8px;padding:2px 12px;border-radius:999px;background:var(--tint);color:var(--accent);font-size:.85rem;font-weight:600;vertical-align:middle}
+.time{font-size:.95rem;color:var(--soft);margin:0 0 2px}
+/* School page: each routine is a card with its steps as a wrapping row of 56 px labelled tiles. */
+.rcard{padding:14px 16px;margin:12px 0}
+.rcard .rtitle{font-size:1.05rem;margin:0 0 8px}
+.rcard .cards{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+.rcard .card{background:none;box-shadow:none;padding:0;width:64px}
+.rcard .pic{width:56px;height:56px;padding:4px;border-radius:14px;margin:0 auto}
+.rcard .pic img{width:64px;height:64px;margin:-4px}
+.rcard .name{font-size:.75rem;line-height:1.25;margin-top:4px}
+.rcard .plain .name{width:56px;height:56px;margin:0 auto;padding:2px;border-radius:14px;font-size:.7rem;line-height:1.15}
 [role=tablist]{display:flex;gap:8px;margin:16px 0}
-[role=tab]{flex:1;min-height:48px;font:inherit;font-weight:600;color:var(--ink);background:var(--card);border:2px solid var(--ink);border-radius:999px;cursor:pointer}
-[role=tab][aria-selected=true]{background:var(--ink);color:#fff}
-.btn{display:block;min-height:52px;padding:12px 20px;margin:12px 0;font:inherit;font-weight:700;text-align:center;text-decoration:none;color:#fff;background:var(--accent);border:2px solid var(--accent);border-radius:999px;cursor:pointer}
-.btn.alt{color:var(--ink);background:var(--card);border-color:var(--ink)}
+[role=tab]{flex:1;min-height:48px;font:inherit;font-weight:600;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:18px;cursor:pointer}
+[role=tab][aria-selected=true]{background:var(--tint);color:var(--accent);border:2px solid var(--accent)}
+[role=tab][aria-selected=true]::before{content:"\2713\00a0"}
+/* Buttons: Primary = coral fill with its edge, 18 px corners (not a pill); Secondary = outline; Quiet = text. */
+.btn{display:block;min-height:56px;padding:12px 20px;margin:12px 0;font:inherit;font-size:1.05rem;font-weight:700;text-align:center;text-decoration:none;color:var(--on);background:var(--accent);border:0;border-radius:18px;box-shadow:0 4px 0 var(--edge);cursor:pointer}
+.btn.alt{color:var(--accent);background:transparent;box-shadow:inset 0 0 0 1.5px var(--accent)}
 .stores{display:flex;gap:12px;flex-wrap:wrap}.stores .btn{flex:1 1 140px;margin:0}
 .get{margin-top:32px}
+.stores+.lead{margin-top:16px}
 .print{margin-top:32px;padding-top:16px;border-top:1px solid var(--line)}
 .print label{display:block;margin:6px 0;min-height:44px}
-.print input{width:22px;height:22px;vertical-align:middle;margin-right:8px}
+.print input{width:22px;height:22px;vertical-align:middle;margin-right:8px;accent-color:var(--accent)}
 .privacy{margin-top:32px;font-size:.9rem;color:var(--soft)}
-a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #0B57D0;outline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 [hidden]{display:none!important}
-.btn.big{width:100%;font-size:1.2rem;min-height:60px}
+.btn.big{width:100%;font-size:1.125rem;min-height:60px}
+/* Do it here (player). */
 .player{display:flex;flex-direction:column;min-height:calc(100vh - 72px)}
-.ptop{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.pcount{font-size:1.1rem;font-weight:600;color:var(--soft)}
-.link{min-height:44px;padding:8px 12px;font:inherit;font-weight:600;color:var(--ink);background:none;border:0;text-decoration:underline;cursor:pointer}
+.ptop{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.pcount{font-size:1.05rem;font-weight:600}
+.pacts{display:flex;gap:4px}
+.link{min-height:44px;min-width:44px;padding:8px 12px;font:inherit;font-weight:600;color:var(--accent);background:none;border:0;text-decoration:none;cursor:pointer}
+.link:hover,.link:focus-visible{text-decoration:underline}
+.link.ink{color:var(--ink)}
 .dots{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
-.dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--ink)}.dot.on{background:var(--ink)}.dot.now{background:var(--accent);border-color:var(--accent)}
-.ppic{display:flex;align-items:center;justify-content:center;min-height:50vh;background:var(--card);border-radius:24px;box-shadow:0 2px 12px rgba(43,42,40,.1);padding:16px}
-.ppic svg,.ppic img{width:100%;height:auto;max-height:60vh;object-fit:contain;border-radius:16px}
-.pname{font-size:max(28px,2rem);font-weight:700;text-align:center;margin:16px 0 8px;overflow-wrap:anywhere}
+.dot{width:10px;height:10px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--soft)}.dot.on{background:var(--done);box-shadow:none}.dot.now{background:var(--accent);box-shadow:none}
+.ppic{display:flex;align-items:center;justify-content:center;width:100%;max-width:520px;min-height:50vh;max-height:70vh;margin:0 auto;background:var(--p0);border-radius:22px;box-shadow:inset 0 0 0 2px var(--ink);padding:16px;overflow:hidden}
+.ppic svg,.ppic img{width:100%;height:auto;max-height:calc(70vh - 32px);object-fit:contain;border-radius:16px}
+.pname{font-size:max(28px,2.1rem);font-weight:800;text-align:center;margin:16px 0 8px;overflow-wrap:anywhere}
 .pname.plain{flex:1;display:flex;align-items:center;justify-content:center;font-size:max(32px,2.6rem)}
-.btn.done{min-height:64px;font-size:1.4rem;margin-top:auto}
+.btn.done{min-height:64px;font-size:1.375rem;margin-top:auto}
+.btn.done::before{content:"\2713\00a0"}
 .player .link{align-self:center}
+.player .ptop .link{align-self:auto}
 .player.end{text-align:center;justify-content:flex-start}
-.star{font-size:120px;line-height:1;color:#E0A100;margin:24px 0 8px}
+.star{font-size:96px;line-height:1;color:var(--star);margin:24px 0 8px}
+.donetiles{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0 16px;padding:0;list-style:none}
+.donetiles li{position:relative;width:40px;height:40px;border-radius:10px;background:var(--doneBg);box-shadow:inset 0 0 0 1.5px var(--done)}
+.donetiles li::after{content:"\2713";position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:9px;background:var(--done);color:var(--doneBg);font-size:12px;line-height:18px;text-align:center}
+.grown{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);text-align:center}
+.grown .stores{justify-content:center;gap:4px}
+/* Landing: the app's three tilted Welcome cards (no animation on the web). */
+.welcome{display:flex;justify-content:center;gap:0;margin:16px 0 24px}
+.wcard{width:96px;height:120px;margin:0 -8px;border-radius:18px;background:var(--card);box-shadow:inset 0 0 0 2.5px var(--ink);display:flex;align-items:center;justify-content:center}
+.wcard span{display:block;width:64px;height:64px;border-radius:14px;box-shadow:inset 0 0 0 2px var(--ink)}
+.wcard:nth-child(1){transform:rotate(-5deg)}.wcard:nth-child(1) span{background:var(--p0)}
+.wcard:nth-child(2){transform:rotate(1deg);position:relative;z-index:1}.wcard:nth-child(2) span{background:var(--p1)}
+.wcard:nth-child(3){transform:rotate(5deg)}.wcard:nth-child(3) span{background:var(--p4)}
 @media (prefers-reduced-motion:no-preference){.star{animation:grow .6s ease-out 1}@keyframes grow{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
-@media (prefers-reduced-motion:no-preference){.card{transition:box-shadow .2s}}
-@media (prefers-contrast:more){:root{--soft:#2B2A28}.card,.msg{box-shadow:none;border:2px solid var(--ink)}}
+@media (prefers-contrast:more){:root{--soft:var(--ink);--line:var(--ink)}.card,.msg,.rcard{box-shadow:inset 0 0 0 2px var(--ink)}}
 @page{margin:15mm}
 @media print{
-  body{background:#fff;font-size:12pt}
+  body{background:#fff;color:#000;font-size:12pt}
   main{max-width:none;padding:0}
   .noprint,[role=tablist],.get,.print,.privacy,.btn{display:none!important}
   .panel[hidden]{display:none!important}
-  .cards{display:grid;gap:6mm;margin:0}
-  .card{box-shadow:none;border:1px solid #888;border-radius:8mm;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+  .rcard{box-shadow:none;margin:0;padding:0}
+  .cards,.rcard .cards{display:grid;gap:6mm;margin:0}
+  .card,.rcard .card{width:auto;box-shadow:none;border:1px solid #888;border-radius:8mm;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding:4mm}
   .pp6 .cards{grid-template-columns:1fr 1fr;grid-auto-rows:78mm}
-  .pp6 .pic{min-height:0;height:56mm}.pp6 .pic svg,.pp6 .pic img{max-height:54mm;max-width:100%}
+  .pp6 .pic,.pp6 .rcard .pic{min-height:0;width:auto;height:56mm;aspect-ratio:auto}.pp6 .pic svg,.pp6 .pic img{max-height:54mm;max-width:100%}
   .pp2 .cards{grid-template-columns:1fr;grid-auto-rows:114mm}
-  .pp2 .pic{min-height:0;height:84mm}.pp2 .pic svg,.pp2 .pic img{max-height:82mm;max-width:100%}
-  .pp2 .name{font-size:22pt}
+  .pp2 .pic,.pp2 .rcard .pic{min-height:0;width:auto;height:84mm;aspect-ratio:auto}.pp2 .pic svg,.pp2 .pic img{max-height:82mm;max-width:100%}
+  .pp2 .name,.pp2 .rcard .name{font-size:22pt}
+  .pp6 .rcard .name{font-size:14pt}
   .rtitle,.time{display:none}
 }
 </style>
