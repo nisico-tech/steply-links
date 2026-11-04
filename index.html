@@ -1,126 +1,142 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-US">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'self' https://gugomttjtdbmkthzgtfu.supabase.co; img-src data:; style-src 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="steply-api" content="https://gugomttjtdbmkthzgtfu.supabase.co/functions/v1">
-<title>Steply</title>
-<style>
-:root{--bg:#F6F1E7;--card:#FFFCF7;--ink:#2A2622;--soft:#5E564C;--line:#E2D8C6;--tint:#F3E4D3;--accent:#B53E22;--edge:#8F2E17;--on:#FFFFFF;--done:#2F6B4F;--doneBg:#E4F1E8;--p0:#FFE6CC;--p1:#D8E9FB;--p2:#FBDDE2;--p3:#FFF1C7;--p4:#DFF2E1;--p5:#E7DEFB;--focus:#0B57D0;--star:#E2603F}
-@media (prefers-color-scheme:dark){:root{--bg:#16233A;--card:#1E2E4A;--ink:#F3F6FA;--soft:#C3CDDD;--line:#3A4F72;--tint:#2B3F66;--accent:#FF9A7E;--edge:#B8604A;--on:#16233A;--done:#8FD3B0;--doneBg:#1F3A44;--p0:#EBD8C5;--p1:#CDDAE7;--p2:#E7D1D5;--p3:#EBE0C1;--p4:#D1DFD2;--p5:#D8D2E7;--focus:#8AB4F8}}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
-main{max-width:640px;margin:0 auto;padding:24px 16px 48px}
-h1{font-size:1.75rem;font-weight:800;line-height:1.2;margin:0 0 8px}
-h2{font-size:1.2rem;margin:24px 0 4px}
-.lead{font-size:1rem;margin:0 0 8px;color:var(--soft)}
-.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:0 0 4px}
-.fresh{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:999px;background:var(--doneBg);color:var(--done);font-size:1rem;font-weight:600}
-.fresh.stale{background:#FCE9D6;color:#6B3A12}
-.msg,.card,.rcard{background:var(--card);border-radius:22px;box-shadow:inset 0 0 0 1.5px var(--line),0 3px 0 var(--line)}
-.msg{padding:24px;font-size:1.2rem}
-/* Every step of the routine, two columns (one under 340 px or at large text); the picture on its pastel ground, the name under it (DESIGN-63b). */
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;padding:0;list-style:none}
-@media (max-width:340px){.cards{grid-template-columns:1fr}}
-.card{padding:12px;text-align:center;break-inside:avoid}
-.pic{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;border-radius:16px;box-shadow:inset 0 0 0 2px var(--ink);background:var(--p0);overflow:hidden;padding:8px}
-.p1 .pic,.p1.ppic{background:var(--p1)}.p2 .pic,.p2.ppic{background:var(--p2)}.p3 .pic,.p3.ppic{background:var(--p3)}.p4 .pic,.p4.ppic{background:var(--p4)}.p5 .pic,.p5.ppic{background:var(--p5)}
-.pic svg{width:100%;height:100%}
-.pic img{width:calc(100% + 16px);height:calc(100% + 16px);margin:-8px;object-fit:cover}
-.name{font-size:1.05rem;font-weight:600;margin-top:8px;overflow-wrap:anywhere}
-/* A step with no picture: its name on the pastel tile itself, never an empty card. */
-.plain .name{margin:0;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;padding:8px;border-radius:16px;box-shadow:inset 0 0 0 2px var(--ink);background:var(--p0);color:#2A2622}
-.p1.plain .name{background:var(--p1)}.p2.plain .name{background:var(--p2)}.p3.plain .name{background:var(--p3)}.p4.plain .name{background:var(--p4)}.p5.plain .name{background:var(--p5)}
-.tag{display:inline-block;margin:0 0 0 8px;padding:2px 12px;border-radius:999px;background:var(--tint);color:var(--accent);font-size:.85rem;font-weight:600;vertical-align:middle}
-.time{font-size:.95rem;color:var(--soft);margin:0 0 2px}
-/* School page: each routine is a card with its steps as a wrapping row of 56 px labelled tiles. */
-.rcard{padding:14px 16px;margin:12px 0}
-.rcard .rtitle{font-size:1.05rem;margin:0 0 8px}
-.rcard .cards{display:flex;flex-wrap:wrap;gap:8px;margin:0}
-.rcard .card{background:none;box-shadow:none;padding:0;width:64px}
-.rcard .pic{width:56px;height:56px;padding:4px;border-radius:14px;margin:0 auto}
-.rcard .pic img{width:64px;height:64px;margin:-4px}
-.rcard .name{font-size:.75rem;line-height:1.25;margin-top:4px}
-.rcard .plain .name{width:56px;height:56px;margin:0 auto;padding:2px;border-radius:14px;font-size:.7rem;line-height:1.15}
-[role=tablist]{display:flex;gap:8px;margin:16px 0}
-[role=tab]{flex:1;min-height:48px;font:inherit;font-weight:600;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:18px;cursor:pointer}
-[role=tab][aria-selected=true]{background:var(--tint);color:var(--accent);border:2px solid var(--accent)}
-[role=tab][aria-selected=true]::before{content:"\2713\00a0"}
-/* Buttons: Primary = coral fill with its edge, 18 px corners (not a pill); Secondary = outline; Quiet = text. */
-.btn{display:block;min-height:56px;padding:12px 20px;margin:12px 0;font:inherit;font-size:1.05rem;font-weight:700;text-align:center;text-decoration:none;color:var(--on);background:var(--accent);border:0;border-radius:18px;box-shadow:0 4px 0 var(--edge);cursor:pointer}
-.btn.alt{color:var(--accent);background:transparent;box-shadow:inset 0 0 0 1.5px var(--accent)}
-.stores{display:flex;gap:12px;flex-wrap:wrap}.stores .btn{flex:1 1 140px;margin:0}
-.get{margin-top:32px}
-.stores+.lead{margin-top:16px}
-.print{margin-top:32px;padding-top:16px;border-top:1px solid var(--line)}
-.print label{display:block;margin:6px 0;min-height:44px}
-.print input{width:22px;height:22px;vertical-align:middle;margin-right:8px;accent-color:var(--accent)}
-.privacy{margin-top:32px;font-size:.9rem;color:var(--soft)}
-a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-[hidden]{display:none!important}
-.btn.big{width:100%;font-size:1.125rem;min-height:60px}
-/* Do it here (player). */
-.player{display:flex;flex-direction:column;min-height:calc(100vh - 72px)}
-.ptop{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.pcount{font-size:1.05rem;font-weight:600}
-.pacts{display:flex;gap:4px}
-.link{min-height:44px;min-width:44px;padding:8px 12px;font:inherit;font-weight:600;color:var(--accent);background:none;border:0;text-decoration:none;cursor:pointer}
-.link:hover,.link:focus-visible{text-decoration:underline}
-.link.ink{color:var(--ink)}
-.dots{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
-.dot{width:10px;height:10px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--soft)}.dot.on{background:var(--done);box-shadow:none}.dot.now{background:var(--accent);box-shadow:none}
-.ppic{display:flex;align-items:center;justify-content:center;width:100%;max-width:520px;min-height:50vh;max-height:70vh;margin:0 auto;background:var(--p0);border-radius:22px;box-shadow:inset 0 0 0 2px var(--ink);padding:16px;overflow:hidden}
-.ppic svg,.ppic img{width:100%;height:auto;max-height:calc(70vh - 32px);object-fit:contain;border-radius:16px}
-.pname{font-size:max(28px,2.1rem);font-weight:800;text-align:center;margin:16px 0 8px;overflow-wrap:anywhere}
-.pname.plain{flex:1;display:flex;align-items:center;justify-content:center;font-size:max(32px,2.6rem)}
-.btn.done{min-height:64px;font-size:1.375rem;margin-top:auto}
-.btn.done::before{content:"\2713\00a0"}
-.player .link{align-self:center}
-.player .ptop .link{align-self:auto}
-.player.end{text-align:center;justify-content:flex-start}
-.star{font-size:96px;line-height:1;color:var(--star);margin:24px 0 8px}
-.donetiles{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0 16px;padding:0;list-style:none}
-.donetiles li{position:relative;width:40px;height:40px;border-radius:10px;background:var(--doneBg);box-shadow:inset 0 0 0 1.5px var(--done)}
-.donetiles li::after{content:"\2713";position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:9px;background:var(--done);color:var(--doneBg);font-size:12px;line-height:18px;text-align:center}
-.grown{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);text-align:center}
-.grown .stores{justify-content:center;gap:4px}
-/* Landing: the app's three tilted Welcome cards (no animation on the web). */
-.welcome{display:flex;justify-content:center;gap:0;margin:16px 0 24px}
-.wcard{width:96px;height:120px;margin:0 -8px;border-radius:18px;background:var(--card);box-shadow:inset 0 0 0 2.5px var(--ink);display:flex;align-items:center;justify-content:center}
-.wcard span{display:block;width:64px;height:64px;border-radius:14px;box-shadow:inset 0 0 0 2px var(--ink)}
-.wcard:nth-child(1){transform:rotate(-5deg)}.wcard:nth-child(1) span{background:var(--p0)}
-.wcard:nth-child(2){transform:rotate(1deg);position:relative;z-index:1}.wcard:nth-child(2) span{background:var(--p1)}
-.wcard:nth-child(3){transform:rotate(5deg)}.wcard:nth-child(3) span{background:var(--p4)}
-@media (prefers-reduced-motion:no-preference){.star{animation:grow .6s ease-out 1}@keyframes grow{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}}
-@media (prefers-contrast:more){:root{--soft:var(--ink);--line:var(--ink)}.card,.msg,.rcard{box-shadow:inset 0 0 0 2px var(--ink)}}
-@page{margin:15mm}
-@media print{
-  body{background:#fff;color:#000;font-size:12pt}
-  main{max-width:none;padding:0}
-  .noprint,[role=tablist],.get,.print,.privacy,.btn{display:none!important}
-  .panel[hidden]{display:none!important}
-  .rcard{box-shadow:none;margin:0;padding:0}
-  .cards,.rcard .cards{display:grid;gap:6mm;margin:0}
-  .card,.rcard .card{width:auto;box-shadow:none;border:1px solid #888;border-radius:8mm;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding:4mm}
-  .pp6 .cards{grid-template-columns:1fr 1fr;grid-auto-rows:78mm}
-  .pp6 .pic,.pp6 .rcard .pic{min-height:0;width:auto;height:56mm;aspect-ratio:auto}.pp6 .pic svg,.pp6 .pic img{max-height:54mm;max-width:100%}
-  .pp2 .cards{grid-template-columns:1fr;grid-auto-rows:114mm}
-  .pp2 .pic,.pp2 .rcard .pic{min-height:0;width:auto;height:84mm;aspect-ratio:auto}.pp2 .pic svg,.pp2 .pic img{max-height:82mm;max-width:100%}
-  .pp2 .name,.pp2 .rcard .name{font-size:22pt}
-  .pp6 .rcard .name{font-size:14pt}
-  .rtitle,.time{display:none}
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Steply: visual schedule app for autistic kids | picture routines</title>
+<meta name="description" content="A calm visual schedule app for parents of autistic children 3 to 7: picture routines on one simple day, one step at a time in child mode, and Help now for hard moments. Free, no ads.">
+<link rel="canonical" href="https://steply.nisico.eu/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#F5F0E6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121C24" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Steply">
+<meta property="og:title" content="Steply: visual schedule app for autistic kids | picture routines"><meta property="og:description" content="A calm visual schedule app for parents of autistic children 3 to 7: picture routines on one simple day, one step at a time in child mode, and Help now for hard moments. Free, no ads.">
+<meta property="og:url" content="https://steply.nisico.eu/"><meta property="og:image" content="https://steply.nisico.eu/assets/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/manrope-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css?v=2026-11-04">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Steply: Visual Routines", "applicationCategory": "LifestyleApplication", "operatingSystem": "iOS, iPadOS, Android", "description": "A calm visual schedule app for families of autistic children: picture routines, one step at a time, and help for hard moments.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "NISICO TECHNOLOGIES SRL", "alternateName": "NISICO", "url": "https://nisico.eu/", "email": "support@nisico.eu", "address": {"@type": "PostalAddress", "addressLocality": "Bucharest", "addressCountry": "RO"}}, "url": "https://steply.nisico.eu/", "image": "https://steply.nisico.eu/assets/og.jpg"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Who is Steply for?", "acceptedAnswer": {"@type": "Answer", "text": "Parents of autistic children ages 3 to 7, starting with routines at home. No diagnosis is needed: any family that uses picture schedules can use it, and grown-ups can use it for their own day too."}}, {"@type": "Question", "name": "What does my child see?", "acceptedAnswer": {"@type": "Answer", "text": "In child mode your child sees one big picture step at a time and one Done button, with the steps ahead shown as small dots. A parent lock keeps everything else closed. At the end there is a calm All done screen."}}, {"@type": "Question", "name": "What happens when the day goes off plan?", "acceptedAnswer": {"@type": "Answer", "text": "Tap Help now. Breathe together shows a slow, calm circle to breathe with. First / Then shows two pictures in seconds. Change of plan lets you swap a routine or reset the rest of today, and your usual routines are kept."}}, {"@type": "Question", "name": "Does my child need an account or their own tablet?", "acceptedAnswer": {"@type": "Answer", "text": "No. Steply works on the phone or tablet you already have, iPhone, iPad or Android. You do not need an account to start."}}, {"@type": "Question", "name": "Is my child's data private?", "acceptedAnswer": {"@type": "Answer", "text": "Your child never needs an account. Routines and photos you add stay on your device unless you choose to back them up or share a link. There are no ads and we never sell data."}}, {"@type": "Question", "name": "How much does it cost?", "acceptedAnswer": {"@type": "Answer", "text": "Steply is free to download and everyday routines are free, with no ads. Steply Plus is an optional subscription with extras such as week and month planning. You see the price in the App Store or Google Play before you pay, and we email you 2 days before any trial turns into a charge."}}, {"@type": "Question", "name": "Can I use my own photos?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Start from ready-made routines with clear 3D pictures, then swap any picture for a photo of your child's own toothbrush, backpack or bed."}}, {"@type": "Question", "name": "Can I print the pictures?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You can print picture cards and boards from the app, and there are free printable boards on this site for the fridge or a day without screens."}}, {"@type": "Question", "name": "Is Steply a therapy?", "acceptedAnswer": {"@type": "Answer", "text": "No. Steply is a visual support and planning tool. It does not diagnose or treat anything and does not replace your child's doctor, therapist or teacher. Many families use it alongside the plan they already follow."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Steply", "url": "https://steply.nisico.eu/", "publisher": {"@type": "Organization", "name": "NISICO TECHNOLOGIES SRL", "alternateName": "NISICO", "url": "https://nisico.eu/", "email": "support@nisico.eu", "address": {"@type": "PostalAddress", "addressLocality": "Bucharest", "addressCountry": "RO"}}}</script>
 </head>
 <body>
-<main id="app" aria-live="polite"></main>
-<!-- Behaviour lives in share.js (same origin; CSP script-src 'self', no inline script). It reads the key from location.hash, derives the
-     AES key with PBKDF2 and opens the view with AES-GCM; it never sends the key anywhere.
-     Words it shows live there too: Get Steply (free), Today and Tomorrow tabs; the print layout is the @media print block above. -->
-<script src="/share.js" defer></script>
-</body>
-</html>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="/"><img src="/assets/icon-96.png" alt="" width="34" height="34">Steply</a>
+<nav class="nav" aria-label="Main">
+<a href="/#how">How it works</a><a href="/#help-now">Help now</a><a href="/blog/">Guides</a><a href="/printables/">Free printables</a><a href="/#faq">FAQ</a>
+<a class="btn" href="/#get">Get Steply</a>
+</nav></div></header>
+<main id="main">
+<section class="hero"><span class="blob b1" aria-hidden="true"></span><span class="blob b2" aria-hidden="true"></span>
+<div class="wrap" style="position:relative;z-index:1">
+<div>
+<p class="kicker">Visual schedule app · for autistic kids 3 to 7</p>
+<h1>Calm days, <em>one picture</em> at a time.</h1>
+<p class="lead">Steply turns your child's routines into big, friendly picture steps. Hand over the phone: your child sees what happens now, what comes next, and taps Done. When the day goes off plan, help is one tap away.</p>
+<div id="get"><div class="stores"><span class="store soon" aria-label="App Store: coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.5 0 2 .8 3.3.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.8-1-2.8-4.3zM13.9 5.3c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5z"/></svg><span><small>Coming soon</small><b>App Store</b></span></span><span class="store soon" aria-label="Google Play: coming soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#34A853" d="M3.6 1.8 13.4 12 3.6 22.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-1 .6-1.2z"/><path fill="#FBBC04" d="m16.8 15.4-3.4-3.4 3.4-3.4 3.9 2.2c1.1.6 1.1 1.8 0 2.4z"/><path fill="#4285F4" d="M16.8 8.6 13.4 12 3.6 1.8c.3-.1.7-.1 1.1.1z"/><path fill="#EA4335" d="M16.8 15.4 4.7 22.1c-.4.2-.8.2-1.1.1L13.4 12z"/></svg><span><small>Coming soon</small><b>Google Play</b></span></span></div><form class="wl" action="https://formspree.io/f/mnppobew" method="POST" data-wl>
+<label class="sr" for="wl-1" style="position:absolute;left:-9999px">Email</label>
+<input id="wl-1" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+<input type="hidden" name="app" value="steply"><input type="hidden" name="role" value="person"><input type="hidden" name="page" value="steply.nisico.eu">
+<button class="btn" type="submit">Email me at launch</button>
+</form>
+<p class="wl-ok" role="status">Thank you. We will email you once, on the day Steply is in the stores.</p>
+<p class="fine">One email when Steply launches. No spam. <a href="https://nisico.eu/steply/privacy.html">Privacy</a></p></div>
+<ul class="proof"><li>Free, no ads</li><li>iPhone, iPad and Android</li><li>No account needed</li></ul>
+</div>
+<div class="stage" aria-label="Steply on two phones">
+<div class="phone p1"><div class="scr"><img src="/assets/screens/today.webp" alt="Steply Today screen: Morning routine ready, with Hand to Maya button" width="390" height="844" fetchpriority="high" decoding="async"></div></div>
+<div class="phone p2"><div class="scr demo"><img src="/assets/screens/step-toilet.webp" alt="Child mode step: Toilet" width="390" height="844" fetchpriority="high" decoding="async"><img src="/assets/screens/step-teeth.webp" alt="Child mode step: Brush teeth" width="390" height="844" fetchpriority="high" decoding="async"><img src="/assets/screens/step-sock.webp" alt="Child mode small step: Left sock" width="390" height="844" fetchpriority="high" decoding="async"><img src="/assets/screens/all-done.webp" alt="All done, Maya. One star added." width="390" height="844" fetchpriority="high" decoding="async"></div></div>
+<div class="float f1"><img src="/assets/emoji/toothbrush.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><span>Brush teeth<small>Step 2 of 5</small></span></div>
+<div class="float f2"><img src="/assets/emoji/ring_buoy.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><span>Help now<small>Breathe · First / Then</small></span></div>
+<div class="float f3"><img src="/assets/emoji/glowing_star.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><span>All done!<small>No streaks, just calm</small></span></div>
+</div>
+</div></section>
+
+<section id="how"><div class="wrap">
+<div class="center rv"><p class="kicker">How it works</p><h2>From a hard morning to “Done!” in three steps</h2>
+<p class="lead">Pick a ready-made routine, make it yours, and hand over the screen. Steply does the showing, so you can do the helping.</p></div>
+<div class="grid g3 steps" style="margin-top:40px">
+<div class="step rv"><div class="phone sm"><div class="scr"><img src="/assets/screens/add.webp" alt="Adding a routine" width="390" height="844" loading="lazy" decoding="async"></div></div><h3>Pick a routine</h3><p>Start from ready-made routines for mornings, bedtime, school or outings. Swap in photos of your child's own things.</p></div>
+<div class="step rv"><div class="phone sm"><div class="scr"><img src="/assets/screens/today.webp" alt="Today screen with the next routine" width="390" height="844" loading="lazy" decoding="async"></div></div><h3>See the day</h3><p>Today shows what is next in one big card, and the rest of the day below it. Tap Hand to your child.</p></div>
+<div class="step rv"><div class="phone sm"><div class="scr"><img src="/assets/screens/step-teeth.webp" alt="Child mode: Brush teeth" width="390" height="844" loading="lazy" decoding="async"></div></div><h3>One step at a time</h3><p>Your child sees one big picture and one Done button. A parent lock keeps everything else closed.</p></div>
+</div></div></section>
+
+<section id="help-now" class="band"><div class="wrap split">
+<div class="rv"><p class="kicker">Help now</p><h2>When the day goes off plan</h2>
+<p class="lead">Rain, a closed park, a meltdown at the door. One tap on Help now, and your child sees something calm and clear, full screen.</p>
+<ul class="ticks">
+<li><img src="/assets/emoji/bubbles.webp" alt="" width="30" height="30" loading="lazy" decoding="async"><span><b>Breathe together.</b> A slow circle grows and shrinks: breathe in, rest, breathe out. Quiet: no sound and no vibration.</span></li>
+<li><img src="/assets/emoji/green_apple.webp" alt="" width="30" height="30" loading="lazy" decoding="async"><span><b>First / Then.</b> Two pictures in seconds: first shoes, then tablet.</span></li>
+<li><img src="/assets/emoji/umbrella.webp" alt="" width="30" height="30" loading="lazy" decoding="async"><span><b>Change of plan.</b> Swap a routine or reset the rest of today. Your usual routines are kept for tomorrow.</span></li>
+</ul></div>
+<div class="phones rv"><div class="phone sm"><div class="scr"><img src="/assets/screens/help.webp" alt="Help now sheet: Breathe together, First / Then, Change of plan" width="390" height="844" loading="lazy" decoding="async"></div></div><div class="phone sm"><div class="scr"><img src="/assets/screens/breathe.webp" alt="Breathe together: a calm circle" width="390" height="844" loading="lazy" decoding="async"></div></div></div>
+</div></section>
+
+<section><div class="wrap">
+<div class="center rv"><p class="kicker">What Steply does</p><h2>Everything a visual schedule needs. Nothing it doesn't.</h2></div>
+<div class="grid g3" style="margin-top:40px"><div class="card rv"><div class="tile t-peach"><img src="/assets/emoji/sunrise.webp" alt="" width="44" height="44" loading="lazy" decoding="async"></div><h3>Picture routines for the whole day</h3><p>Morning, after school, bedtime: your child&#x27;s day as calm picture routines, grouped into morning, afternoon and evening.</p></div><div class="card rv"><div class="tile t-sky"><img src="/assets/emoji/running_shoe.webp" alt="" width="44" height="44" loading="lazy" decoding="async"></div><h3>One step at a time</h3><p>Hand over the screen. Your child sees one big picture and one Done button. Big steps can split into small ones, like left sock, right sock.</p></div><div class="card rv"><div class="tile t-butter"><img src="/assets/emoji/camera.webp" alt="" width="44" height="44" loading="lazy" decoding="async"></div><h3>Their own things, in photos</h3><p>Start from ready-made routines with clear 3D pictures, then add photos of your child&#x27;s own toothbrush, backpack or bed.</p></div><div class="card rv"><div class="tile t-sage"><img src="/assets/emoji/calendar.webp" alt="" width="44" height="44" loading="lazy" decoding="async"></div><h3>Plan the week ahead</h3><p>Tap the date for a month calendar. Add a dentist visit or a birthday party so nothing comes as a surprise.</p></div><div class="card rv"><div class="tile t-rose"><img src="/assets/emoji/glowing_star.webp" alt="" width="44" height="44" loading="lazy" decoding="async"></div><h3>A calm All done</h3><p>At the end, a quiet check and a star. No streaks to lose and no red marks.</p></div><div class="card rv"><div class="tile t-lav"><img src="/assets/emoji/pencil.webp" alt="" width="44" height="44" loading="lazy" decoding="async"></div><h3>Change anything in seconds</h3><p>Hold a routine to move its time, swipe to skip or finish, type to add a new one. Print any routine as cards.</p></div></div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+<div class="center rv"><p class="kicker">Inside the app</p><h2>Real screens, not a mock-up</h2></div>
+<div class="gallery" tabindex="0" aria-label="App screens, scroll sideways"><figure><div class="phone sm"><div class="scr"><img src="/assets/screens/today.webp" alt="Today: the next routine, ready to hand over" width="390" height="844" loading="lazy" decoding="async"></div></div><figcaption>Today: the next routine, ready to hand over</figcaption></figure><figure><div class="phone sm"><div class="scr"><img src="/assets/screens/step-teeth.webp" alt="Child mode: one big step, one Done button" width="390" height="844" loading="lazy" decoding="async"></div></div><figcaption>Child mode: one big step, one Done button</figcaption></figure><figure><div class="phone sm"><div class="scr"><img src="/assets/screens/step-sock.webp" alt="Big steps split into small ones" width="390" height="844" loading="lazy" decoding="async"></div></div><figcaption>Big steps split into small ones</figcaption></figure><figure><div class="phone sm"><div class="scr"><img src="/assets/screens/all-done.webp" alt="A calm All done, with a star" width="390" height="844" loading="lazy" decoding="async"></div></div><figcaption>A calm All done, with a star</figcaption></figure><figure><div class="phone sm"><div class="scr"><img src="/assets/screens/help.webp" alt="Help now for hard moments" width="390" height="844" loading="lazy" decoding="async"></div></div><figcaption>Help now for hard moments</figcaption></figure><figure><div class="phone sm"><div class="scr"><img src="/assets/screens/breathe.webp" alt="Breathe together: a slow, calm circle" width="390" height="844" loading="lazy" decoding="async"></div></div><figcaption>Breathe together: a slow, calm circle</figcaption></figure><figure><div class="phone sm"><div class="scr"><img src="/assets/screens/month.webp" alt="The month at a glance" width="390" height="844" loading="lazy" decoding="async"></div></div><figcaption>The month at a glance</figcaption></figure><figure><div class="phone sm"><div class="scr"><img src="/assets/screens/add.webp" alt="Add a routine by typing its name" width="390" height="844" loading="lazy" decoding="async"></div></div><figcaption>Add a routine by typing its name</figcaption></figure></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+<div class="center rv"><p class="kicker">Made for calm</p><h2>Built for sensitive kids and tired parents</h2>
+<p class="lead">Soft colors, big pictures, no surprises. Everything on your child's screen is there for a reason.</p></div>
+<div class="calm rv" style="margin-top:32px"><div>No ads<span>Ever. Nothing to tap by mistake.</span></div><div>No streaks<span>No red marks or lost points.</span></div><div>No sudden sounds<span>Quiet by default.</span></div><div>No account<span>Not for you, not for your child.</span></div><div>Private<span>Photos stay on your device.</span></div></div>
+<div class="split" style="margin-top:56px;align-items:start">
+<div class="rv"><h3 style="font-size:1.5rem">What Steply will not be</h3><p class="lead" style="font-size:1rem">We would rather say it now than disappoint you later.</p></div>
+<ul class="nots rv"><li>Not therapy, a diagnosis or a treatment plan</li><li>Not a replacement for your child&#x27;s therapist or teacher</li><li>No social feed, no ads, no selling of data</li><li>No timers that rush your child, no flashing screens</li></ul>
+</div></div></section>
+
+<section><div class="wrap">
+<div class="rv" style="display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap"><div><p class="kicker">Guides for parents</p><h2 style="margin:0">Practical, sourced, short</h2></div><a class="btn quiet" href="/blog/">All guides</a></div>
+<div class="posts" style="margin-top:32px"><a class="post rv" href="/blog/visual-schedule-app-or-paper/"><div class="tile t-butter"><img src="/assets/emoji/light_bulb.webp" alt="" width="44" height="44" loading="lazy" decoding="async"></div><h3>Visual schedule app or paper board? How to choose</h3><p>Paper boards and visual schedule apps both work. What the research says, what each is good at, and how most families end up using both.</p><span class="more">Read the guide →</span></a><a class="post rv" href="/blog/morning-routine-for-autistic-child/"><div class="tile t-peach"><img src="/assets/emoji/sunrise.webp" alt="" width="44" height="44" loading="lazy" decoding="async"></div><h3>A morning routine for an autistic child, picture by picture</h3><p>A ready example of a visual morning routine for a young autistic child: the steps, the pictures, how to split hard steps, and what to do when the morning goes off plan.</p><span class="more">Read the guide →</span></a><a class="post rv" href="/blog/bedtime-routine-for-autistic-child/"><div class="tile t-lav"><img src="/assets/emoji/crescent_moon.webp" alt="" width="44" height="44" loading="lazy" decoding="async"></div><h3>A visual bedtime routine for an autistic child</h3><p>How to build a calm, predictable visual bedtime routine for a young autistic child: the steps, the pictures, a clear end, and what to do when bedtime goes wrong.</p><span class="more">Read the guide →</span></a></div>
+<div class="card rv" style="margin-top:18px;display:flex;gap:20px;align-items:center;flex-wrap:wrap"><div class="tile t-butter" style="margin:0"><img src="/assets/emoji/pencil.webp" alt="" width="44" height="44" loading="lazy" decoding="async"></div><div style="flex:1;min-width:220px"><h3 style="margin:0 0 4px">Free printable picture boards</h3><p>A First / Then board and morning and bedtime routine cards, ready to print. No email needed.</p></div><a class="btn" href="/printables/">Get the printables</a></div>
+</div></section>
+
+<section id="faq" style="padding-top:0"><div class="wrap" style="max-width:820px">
+<div class="center rv"><p class="kicker">Questions</p><h2>Parents ask us</h2></div>
+<div class="faq" style="margin-top:28px"><details><summary>Who is Steply for?</summary><p>Parents of autistic children ages 3 to 7, starting with routines at home. No diagnosis is needed: any family that uses picture schedules can use it, and grown-ups can use it for their own day too.</p></details><details><summary>What does my child see?</summary><p>In child mode your child sees one big picture step at a time and one Done button, with the steps ahead shown as small dots. A parent lock keeps everything else closed. At the end there is a calm All done screen.</p></details><details><summary>What happens when the day goes off plan?</summary><p>Tap Help now. Breathe together shows a slow, calm circle to breathe with. First / Then shows two pictures in seconds. Change of plan lets you swap a routine or reset the rest of today, and your usual routines are kept.</p></details><details><summary>Does my child need an account or their own tablet?</summary><p>No. Steply works on the phone or tablet you already have, iPhone, iPad or Android. You do not need an account to start.</p></details><details><summary>Is my child&#x27;s data private?</summary><p>Your child never needs an account. Routines and photos you add stay on your device unless you choose to back them up or share a link. There are no ads and we never sell data.</p></details><details><summary>How much does it cost?</summary><p>Steply is free to download and everyday routines are free, with no ads. Steply Plus is an optional subscription with extras such as week and month planning. You see the price in the App Store or Google Play before you pay, and we email you 2 days before any trial turns into a charge.</p></details><details><summary>Can I use my own photos?</summary><p>Yes. Start from ready-made routines with clear 3D pictures, then swap any picture for a photo of your child&#x27;s own toothbrush, backpack or bed.</p></details><details><summary>Can I print the pictures?</summary><p>Yes. You can print picture cards and boards from the app, and there are free printable boards on this site for the fridge or a day without screens.</p></details><details><summary>Is Steply a therapy?</summary><p>No. Steply is a visual support and planning tool. It does not diagnose or treat anything and does not replace your child&#x27;s doctor, therapist or teacher. Many families use it alongside the plan they already follow.</p></details></div>
+</div></section>
+
+<section style="padding-top:0"><div class="final rv">
+<img class="deco d1" src="/assets/emoji/sunrise.webp" alt="" width="84" height="84"><img class="deco d2" src="/assets/emoji/crescent_moon.webp" alt="" width="84" height="84">
+<img class="deco d3" src="/assets/emoji/teddy_bear.webp" alt="" width="84" height="84"><img class="deco d4" src="/assets/emoji/backpack.webp" alt="" width="84" height="84">
+<h2>Tomorrow morning can be calmer</h2>
+<p class="lead">Free on iPhone, iPad and Android. Your first routine is ready in a few taps.</p>
+<div class="stores"><span class="store soon" aria-label="App Store: coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.5 0 2 .8 3.3.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.8-1-2.8-4.3zM13.9 5.3c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5z"/></svg><span><small>Coming soon</small><b>App Store</b></span></span><span class="store soon" aria-label="Google Play: coming soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#34A853" d="M3.6 1.8 13.4 12 3.6 22.2c-.4-.2-.6-.7-.6-1.2V3c0-.5.2-1 .6-1.2z"/><path fill="#FBBC04" d="m16.8 15.4-3.4-3.4 3.4-3.4 3.9 2.2c1.1.6 1.1 1.8 0 2.4z"/><path fill="#4285F4" d="M16.8 8.6 13.4 12 3.6 1.8c.3-.1.7-.1 1.1.1z"/><path fill="#EA4335" d="M16.8 15.4 4.7 22.1c-.4.2-.8.2-1.1.1L13.4 12z"/></svg><span><small>Coming soon</small><b>Google Play</b></span></span></div><form class="wl" action="https://formspree.io/f/mnppobew" method="POST" data-wl>
+<label class="sr" for="wl-2" style="position:absolute;left:-9999px">Email</label>
+<input id="wl-2" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+<input type="hidden" name="app" value="steply"><input type="hidden" name="role" value="person"><input type="hidden" name="page" value="steply.nisico.eu">
+<button class="btn" type="submit">Email me at launch</button>
+</form>
+<p class="wl-ok" role="status">Thank you. We will email you once, on the day Steply is in the stores.</p>
+<p class="fine">One email when Steply launches. No spam. <a href="https://nisico.eu/steply/privacy.html">Privacy</a></p>
+</div></section>
+</main>
+<footer><div class="wrap">
+<div class="cols">
+<div><a class="brand" href="/"><img src="/assets/icon-96.png" alt="" width="34" height="34">Steply</a>
+<p style="margin-top:14px">A calm visual schedule app for families of autistic children. Made by <a href="https://nisico.eu/">NISICO</a>, a small app studio in Bucharest, Romania (EU).</p>
+<p>Questions? <a href="mailto:support@nisico.eu">support@nisico.eu</a></p></div>
+<div><h4>Guides</h4><ul><li><a href="/blog/visual-schedule-app-or-paper/">App or paper schedule?</a></li><li><a href="/blog/morning-routine-for-autistic-child/">A calmer morning routine</a></li><li><a href="/blog/bedtime-routine-for-autistic-child/">A visual bedtime routine</a></li><li><a href="/blog/how-to-make-a-visual-schedule-for-an-autistic-child/">Make a visual schedule</a></li><li><a href="/blog/first-then-board/">First / Then board</a></li><li><a href="/blog/">All guides</a></li></ul></div>
+<div><h4>Steply</h4><ul><li><a href="/#how">How it works</a></li><li><a href="/printables/">Free printables</a></li><li><a href="/resources/">Resources for parents</a></li><li><a href="/#faq">FAQ</a></li><li><a href="https://nisico.eu/apps/">More apps by NISICO</a></li></ul></div>
+<div><h4>Legal</h4><ul><li><a href="https://nisico.eu/steply/support.html">Support</a></li><li><a href="https://nisico.eu/steply/privacy.html">Privacy policy</a></li><li><a href="https://nisico.eu/steply/delete-data.html">Delete your data</a></li></ul></div>
+</div>
+<p class="legal">Steply is a visual support and planning tool for families. It is not a medical device or therapy and does not replace advice from your child's doctor, therapist or teacher. It is not affiliated with or endorsed by any autism organization. App Store is a service mark of Apple Inc. Google Play is a trademark of Google LLC.<br>© 2026 NISICO TECHNOLOGIES SRL · Bucharest, Romania (EU) · <a href="https://nisico.eu/#company">Company details</a></p>
+</div></footer>
+<script>
+document.documentElement.classList.add("js");
+(function(){var io="IntersectionObserver" in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{rootMargin:"0px 0px -8% 0px"}):null;
+document.querySelectorAll(".rv").forEach(function(el){io?io.observe(el):el.classList.add("in")});
+document.querySelectorAll("form[data-wl]").forEach(function(f){f.addEventListener("submit",function(ev){ev.preventDefault();var ok=f.nextElementSibling;
+fetch(f.action,{method:"POST",body:new FormData(f),headers:{Accept:"application/json"}}).then(function(r){if(!r.ok)throw 0;f.style.display="none";ok.style.display="block"}).catch(function(){location.href="mailto:support@nisico.eu?subject=Steply%20launch%20email"})})});})();
+</script>
+</body></html>

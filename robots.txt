@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /r/
+Disallow: /s/
+Disallow: /join
+Sitemap: https://steply.nisico.eu/sitemap.xml
