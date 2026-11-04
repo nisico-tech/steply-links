@@ -247,3 +247,17 @@ footer .legal{border-top:1px solid var(--hair);margin-top:32px;padding-top:20px;
   .feat .card .tile{width:56px;height:56px;margin:0;grid-row:span 2;border-radius:16px}.feat .card .tile img{width:38px;height:38px}
   .feat .card h3{margin:2px 0 0;font-size:1.05rem}.feat .card p{font-size:.93rem}
 }
+/* v3 (debate round 2): product in the first phone viewport, compact features */
+@media (max-width:900px){
+  .hero .wrap>div:first-child{display:contents}
+  .hero .wrap{display:flex;flex-direction:column;gap:0}
+  .hero .kicker{order:1}.hero h1{order:2}.hero .lead{order:3}
+  .hero .stage{order:4;height:500px;margin:8px auto 18px}
+  .hero #get{order:5}.hero .proof{order:6}
+  .stage .p1{width:min(56vw,220px)}
+  .stage .p2{width:min(36vw,140px);bottom:10px}
+}
+.feat{gap:12px}
+.feat .card{display:grid;grid-template-columns:52px 1fr;gap:2px 14px;padding:18px 20px;align-items:start}
+.feat .card .tile{width:52px;height:52px;margin:0;grid-row:span 2;border-radius:16px}.feat .card .tile img{width:36px;height:36px}
+.feat .card h3{margin:2px 0 0;font-size:1.02rem}.feat .card p{font-size:.92rem}
