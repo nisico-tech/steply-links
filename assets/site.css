@@ -216,3 +216,34 @@ footer .legal{border-top:1px solid var(--hair);margin-top:32px;padding-top:20px;
 .js .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
 .js .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}}
+
+/* v2 (debate round 1): one big parent phone + a smaller child phone, labels, tinted step pads, teal trust band */
+.stage .p1{width:300px;left:6%;top:0;transform:rotate(-2deg)}
+.stage .p2{width:200px;right:4%;top:auto;bottom:30px;transform:rotate(4deg);z-index:3}
+.stage .f2{right:-2%;top:30px}
+.tag{position:absolute;margin:0;font:700 .72rem/1 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);z-index:4}
+.tag.t1{left:8%;bottom:-6px}.tag.t2{right:8%;bottom:4px}
+.wl{margin-top:20px}
+.stores{margin-top:16px}.stores .store{padding:8px 14px 8px 12px;min-width:0;border-radius:14px}.stores .store b{font-size:.98rem}
+.pad{border-radius:28px;padding:26px 0 0;width:100%;display:flex;justify-content:center;overflow:hidden;height:330px;align-items:flex-start}
+.pad .phone{width:220px}
+.trust{background:var(--teal);color:var(--on-teal);border-radius:40px;margin:0 12px}
+.trust h2,.trust .kicker{color:var(--on-teal)}.trust .lead{color:color-mix(in srgb,var(--on-teal) 85%,transparent)}
+.trust .calm div{background:color-mix(in srgb,var(--on-teal) 12%,transparent);color:var(--on-teal)}.trust .calm div span{color:var(--on-teal)}
+.nots-d{margin-top:22px}.nots-d summary{cursor:pointer;font:700 1.05rem Manrope,sans-serif;padding:10px 0}
+.nots-d .nots li{background:color-mix(in srgb,var(--on-teal) 10%,transparent);box-shadow:none;color:var(--on-teal)}.nots-d .nots li::before{background:var(--on-teal)}
+.faq-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start}
+@media (max-width:900px){
+  .faq-wrap{grid-template-columns:1fr}
+  .stage{height:560px}
+  .stage .p1{width:min(66vw,270px);left:0}
+  .stage .p2{width:min(42vw,170px);right:0;bottom:24px}
+  .stage .f2{display:none}
+  .tag.t1{left:2%}.tag.t2{right:2%;bottom:0}
+}
+@media (max-width:600px){.trust{border-radius:28px;margin:0 8px}.pad{height:300px}}
+@media (max-width:600px){
+  .feat .card{display:grid;grid-template-columns:56px 1fr;gap:4px 14px;padding:18px}
+  .feat .card .tile{width:56px;height:56px;margin:0;grid-row:span 2;border-radius:16px}.feat .card .tile img{width:38px;height:38px}
+  .feat .card h3{margin:2px 0 0;font-size:1.05rem}.feat .card p{font-size:.93rem}
+}
