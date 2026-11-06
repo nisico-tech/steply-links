@@ -1,10 +1,10 @@
-/* steply.nisico.eu: the Steply site. Look = the app's Today design (LOOK_R1103M): linen, paper cards, deep teal, pastel tiles,
+/* steply.nisico.eu: the Steply site. Look = the app's Today design (LOOK_R1103M) in the one palette of F-PL1106 (petrol logo, teal, sun): linen, paper cards, deep teal, pastel tiles,
    Manrope headings + Inter text, Fluent Emoji 3D pictures (MIT). Self-hosted fonts, no external requests. */
 @font-face{font-family:"Manrope";src:url("/assets/fonts/manrope-latin-wght.woff2") format("woff2");font-weight:200 800;font-display:swap}
 @font-face{font-family:"Inter";src:url("/assets/fonts/inter-latin-wght.woff2") format("woff2");font-weight:100 900;font-display:swap}
 
 :root{
-  --linen:#F5F0E6;--card:#FFFCF7;--teal:#24616A;--teal-deep:#1B4B52;--ink:#1F2A2E;--muted:#625D55;--hair:#E8DFD0;
+  --linen:#F6F1E7;--card:#FFFCF7;--teal:#26646B;--teal-deep:#173E43;--sun:#F5BE3C;--ink:#1F2A2E;--muted:#625D55;--hair:#E8DFD0;
   --peach:#F6E1CF;--sage:#DDEBE3;--lavender:#ECE5F3;--butter:#F7ECCB;--sky:#DFEBF2;--rose:#F5E0DA;
   --done:#2F5B48;--help:#4A3F73;--on-teal:#fff;--focus:#0B57D0;
   --shadow1:0 1px 2px rgba(60,45,20,.06),0 4px 10px rgba(60,45,20,.05);
@@ -13,9 +13,9 @@
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root{
-  --linen:#121C24;--card:#1A2731;--teal:#7CC4C9;--teal-deep:#5AA6AC;--ink:#EEF3F4;--muted:#A9B6BC;--hair:#2C3B46;
-  --peach:#3A2E27;--sage:#243A33;--lavender:#2E2A3D;--butter:#3A3424;--sky:#22343F;--rose:#3B2A2A;
-  --done:#9AD7B8;--help:#CFC4F4;--on-teal:#0E1A20;--focus:#8AB4F8;
+  --linen:#10242C;--card:#1B3843;--teal:#8ACFC8;--teal-deep:#4F8F89;--ink:#F3F6F5;--muted:#C3D3D6;--hair:#44666F;
+  --peach:#3A2E27;--sage:#243A33;--lavender:#2E2A3D;--butter:#3A3424;--sky:#22404A;--rose:#3B2A2A;
+  --done:#9AD7B8;--help:#CFC4F4;--on-teal:#10242C;--focus:#8AB4F8;
   --shadow1:0 0 0 1px var(--hair);--shadow2:0 0 0 1px var(--hair),0 18px 40px rgba(0,0,0,.35);color-scheme:dark}}
 
 *{box-sizing:border-box}
